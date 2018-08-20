@@ -1,0 +1,64 @@
+﻿@model IEnumerable<string>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Add Comments</h2>
+<ul id="comments">
+    @foreach(string item in Model)
+    {
+        <li>@item</li>
+    }
+</ul>
+
+@using (Ajax.BeginForm("AddComment", new AjaxOptions
+{
+    InsertionMode = InsertionMode.InsertBefore,
+    UpdateTargetId = "comments",
+     HttpMethod ="Post",
+     OnComplete = "OnCompleteFunction",
+     OnFailure = "OnFailureFunction",
+     Confirm = "Вы уверены"
+}))
+{
+    @Html.TextArea("Comment", new { row = 5, cols = 50 })
+    <br />
+    <input type="submit" value="AddComment" />
+}
+
+@*<form method="post" action="@Url.Action("AddComment")" id="CommentForm">
+   
+</form>*@
+
+<br />
+<hr />
+<br />
+
+@Ajax.ActionLink("Show", "PrivacyPolicy", new AjaxOptions {
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "privacy"
+})
+
+<div id="privacy"></div>
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script>
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/AjaxDemo.js")"></script>
+    <script>
+
+        function OnCompleteFunction()
+        {
+            alert("test!");
+        }
+
+        function OnFailureFunction(data)
+        {
+            console.log(data);
+        }
+       // AjaxDemo.init();
+    </script>
+}
+

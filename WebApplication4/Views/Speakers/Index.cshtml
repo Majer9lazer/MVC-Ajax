@@ -1,0 +1,26 @@
+﻿@model IEnumerable<WebApplication4.Controllers.Speaker>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Speakers</h2>
+
+<ul class="speaker">
+    @foreach (var item in Model)
+    {
+        <li>
+            @Html.ActionLink(item.FirstName+" "+item.LastName, "Details", new { SpeakerId = item.SpeakerId })
+        </li>
+    }
+</ul>
+
+<img id="indicator" src="~/Content/loading.gif" alt="loading..." style="display: none"/>
+<div id="speakersDetails">
+    
+</div>
+
+@section scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Speaker.js")"></script>
+}
+
